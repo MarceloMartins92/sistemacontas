@@ -1,0 +1,91 @@
+﻿@model SistemaContas.Presentation.Models.ContasConsultaViewModel
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+
+            <h5>Consulta de Contas</h5>
+            <p>Consulte as suas contas por período de datas.</p>
+            <hr />
+
+            @using (Html.BeginForm())
+            {
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.DataIni, new { @class = "form-control", @type = "date" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.DataIni)
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.TextBoxFor(model => model.DataFim, new { @class = "form-control", @type = "date" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.DataFim)
+                        </span>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-success" value="Filtrar Contas" />
+                        &nbsp;
+                        <a href="/Contas/RelatorioExcel" class="btn btn-outline-primary">
+                            Gerar Relatório Excel
+                        </a>
+                        &nbsp;
+                        <a href="/Contas/RelatorioPdf" class="btn btn-outline-primary">
+                            Gerar Relatório Pdf
+                        </a>
+                    </div>
+
+                </div>
+
+            }
+
+            @if (Model != null && Model.Resultado != null && Model.Resultado.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table id="grid_dados" class="table table-sm table-hover">
+                        <thead>
+                            <tr>
+                                <th>Nome da conta</th>
+                                <th>Valor</th>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Categoria</th>
+                                <th>Operações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Resultado)
+                            {
+                                <tr>
+                                    <td>@item.Nome</td>
+                                    <td>@item.Valor</td>
+                                    <td>@item.Data</td>
+                                    <td>@item.Tipo</td>
+                                    <td>@item.Categoria</td>
+                                    <td>
+                                        <a href="/Contas/Edicao/@item.Id"
+                                   class="btn btn-sm btn-outline-primary">
+                                            Editar
+                                        </a>
+                                        <a href="/Contas/Exclusao/@item.Id"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Deseja realmente excluir esta conta?');">
+                                            Excluir
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+

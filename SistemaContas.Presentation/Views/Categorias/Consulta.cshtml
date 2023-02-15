@@ -1,0 +1,62 @@
+﻿@** Definir a classe de modelo de dados da página *@
+@model List<SistemaContas.Presentation.Models.CategoriasConsultaViewModel>
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+
+            <h5>Consulta de Categorias</h5>
+            <p>Listagem de categorias cadastradas.</p>
+            <hr />
+
+            <div class="mb-3">
+                <a href="/Categorias/RelatorioExcel" class="btn btn-outline-primary">
+                    Gerar Relatório Excel
+                </a>
+                &nbsp;
+                <a href="/Categorias/RelatorioPdf" class="btn btn-outline-primary">
+                    Gerar Relatório Pdf
+                </a>
+            </div>
+
+            <div class="table-responsive">
+                <table id="grid_dados" class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Nome da categoria</th>
+                            <th>Operações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Nome</td>
+                                <td>
+                                    <a href="/Categorias/Edicao/@item.Id"
+                                   class="btn btn-sm btn-outline-primary">
+                                        Editar
+                                    </a>
+                                    <a href="/Categorias/Exclusao/@item.Id"
+                                   class="btn btn-sm btn-outline-danger"
+                                   onclick="return confirm('Deseja realmente excluir esta categoria?');">
+                                        Excluir
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+

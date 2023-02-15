@@ -1,0 +1,32 @@
+﻿@model SistemaContas.Presentation.Models.CategoriasCadastroViewModel
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+
+            <h5>Cadastro de Categorias</h5>
+            <p>Inclua categorias para que suas contas possam ser organizadas.</p>
+            <hr/>
+
+            @using(Html.BeginForm())
+            {
+                <div class="mb-2">
+                    <label>Nome da categoria:</label>
+                    @Html.TextBoxFor(model => model.Nome, new { @class = "form-control" })
+                    <span class="text-danger">
+                        @Html.ValidationMessageFor(model => model.Nome)
+                    </span>
+                </div>                
+
+                <div class="mb-2">
+                    <input type="submit" class="btn btn-success" value="Realizar Cadastro"/>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

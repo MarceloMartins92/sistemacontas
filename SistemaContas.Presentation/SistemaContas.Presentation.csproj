@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bogus" Version="34.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SistemaContas.Data\SistemaContas.Data.csproj" />
+    <ProjectReference Include="..\SistemaContas.Messages\SistemaContas.Messages.csproj" />
+    <ProjectReference Include="..\SistemaContas.Reports\SistemaContas.Reports.csproj" />
+  </ItemGroup>
+
+</Project>

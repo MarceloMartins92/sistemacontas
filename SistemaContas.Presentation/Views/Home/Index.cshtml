@@ -1,0 +1,91 @@
+﻿@model SistemaContas.Presentation.Models.DashboardViewModel
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+}
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+
+            <div class="mb-3">
+                <h5>Resumo de Contas do período de: @Model.DataIni a @Model.DataFim</h5>
+                <hr />
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <div class="alert alert-success">
+                        <div>Total a receber</div>
+                        <div>
+                            <strong>@Model.TotalReceber.Value.ToString("c")</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-danger">
+                        <div>Total a pagar</div>
+                        <div>
+                            <strong>@Model.TotalPagar.Value.ToString("c")</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-secondary">
+                        <div>Saldo</div>
+                        <div>
+                            <strong>@Model.Saldo.Value.ToString("c")</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="alert alert-secondary">
+                        <div>Situação</div>
+                        <div>
+                            <strong>@Model.Situacao</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div id="grafico"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script>
+
+    var dadosGrafico = [];
+    dadosGrafico.push(['Total a Receber', @Model.TotalReceber]);
+    dadosGrafico.push(['Total a Pagar', @Model.TotalPagar]);
+
+    new Highcharts.Chart({
+        chart: {
+            type: 'pie',
+            renderTo: 'grafico'
+        },
+        title: {
+            text: 'Contas a Pagar e Receber'
+        },
+        plotOptions: {
+            pie: {
+                innerSize: '60%',
+                dataLabels: { enable: true },
+                showInLegend: true
+            }
+        },
+        series: [
+            {
+                data: dadosGrafico
+            }
+        ],
+        colors: ['#198754', '#dc3545']
+    });
+
+</script>
+
+

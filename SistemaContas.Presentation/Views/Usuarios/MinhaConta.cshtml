@@ -1,0 +1,63 @@
+﻿@model SistemaContas.Presentation.Models.AlterarSenhaViewModel
+
+@using Newtonsoft.Json
+@using SistemaContas.Presentation.Models
+
+@{
+    Layout = "~/Views/Shared/MainLayout.cshtml";
+
+    var data = User.Identity.Name;
+    var identityViewModel = JsonConvert.DeserializeObject<IdentityViewModel>(data);
+}
+
+<div class="container mt-3">
+    <div class="card">
+        <div class="card-body">
+
+            <h5>Minha Conta de Usuário</h5>
+            <p>Informações do usuário autenticado.</p>
+            <hr/>
+
+            <div class="mb-2">
+                <label>Nome do usuário:</label>
+                <div><strong>@identityViewModel.Nome</strong></div>
+            </div>
+
+            <div class="mb-2">
+                <label>Email do usuário:</label>
+                <div><strong>@identityViewModel.Email</strong></div>
+            </div>
+
+            <hr/>
+
+            <h5>Atualizar Senha de acesso:</h5>
+            
+            @using(Html.BeginForm())
+            {
+                <div class="row mb-2">
+                    <div class="col-md-3">
+                        <label>Nova senha:</label>
+                        @Html.PasswordFor(model => model.NovaSenha, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.NovaSenha)
+                        </span>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Confirme a nova senha:</label>
+                        @Html.PasswordFor(model => model.NovaSenhaConfirmacao, new { @class = "form-control" })
+                        <span class="text-danger">
+                            @Html.ValidationMessageFor(model => model.NovaSenhaConfirmacao)
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-2">
+                    <div class="col-md-12">
+                        <input type="submit" class="btn btn-success" value="Salvar Alterações"/>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

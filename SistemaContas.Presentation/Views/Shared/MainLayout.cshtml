@@ -1,0 +1,133 @@
+﻿@using Newtonsoft.Json;
+@using SistemaContas.Presentation.Models;
+
+@{
+    //capturar os dados do usuário autenticado (Cookie)
+    var data = User.Identity.Name;
+
+    //deserializando os dados
+    var identityViewModel = JsonConvert.DeserializeObject<IdentityViewModel>(data);
+}
+
+<html>
+<head>
+    <title>Sistema de Contas</title>
+
+    <meta name="viewport" content="width=device-width" />
+
+    <!-- biblioteca CSS do bootstrap -->
+    <link rel="stylesheet" href="/css/bootstrap.css" />
+
+    <!-- biblioteca CSS do DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" />
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Sistema Contas</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/Home/Index">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="/Usuarios/MinhaConta">
+                            Minha Conta de Usuário
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Gerenciar Categorias
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/Categorias/Cadastro">Cadastrar Categorias</a></li>
+                            <li><a class="dropdown-item" href="/Categorias/Consulta">Consultar Categorias</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Gerenciar Minhas Contas
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/Contas/Cadastro">Cadastrar Contas</a></li>
+                            <li><a class="dropdown-item" href="/Contas/Consulta">Consultar Contas</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="d-flex">
+                    <div>
+                        <div>
+                            <strong>@identityViewModel.Nome</strong>
+                        </div>
+                        <div class="margin-top: -20px!important;">
+                            <small>@identityViewModel.Email</small>
+                        </div>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;
+                    <div>
+                        <a href="/Account/Logout" class="btn btn-light" style="border: 1px solid #ccc;"
+                            onclick="return confirm('Deseja realmente sair do sistema?');">
+                            Sair do Sistema
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </nav>
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Sucesso!</strong> @TempData["MensagemSucesso"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else if (TempData["MensagemAlerta"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Alerta!</strong> @TempData["MensagemAlerta"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    else if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Erro!</strong> @TempData["MensagemErro"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <!-- conteúdo principal do layout -->
+    @RenderBody()
+
+    <!-- biblioteca JS do bootstrap -->
+    <script src="/js/bootstrap.bundle.js"></script>
+
+    <!-- biblioteca JS do JQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+
+    <!-- biblioteca JS do DataTables -->
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+    <!-- criando o datatable -->
+    <script>
+        $(document).ready(function () {
+            $('#grid_dados').DataTable({
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.1/i18n/pt-BR.json'
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
